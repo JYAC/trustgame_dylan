@@ -1,0 +1,42 @@
+---
+title: "Face Crop for Positioning"
+author: "Julie Cachia"
+date: "07/27/2021"
+output:
+  html_document:
+    highlight: pygments
+    theme: flatly
+    toc: yes
+    toc_float:
+      collapsed: no
+  pdf_document:
+    toc: yes
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, warning=FALSE, message=FALSE)
+```
+
+# Load libraries
+
+```{r}
+library(tidyverse)
+#install.packages("magick")
+library(magick)
+```
+
+# Crop images
+
+```{r}
+# select only jpg
+all.files <- list.files()
+my.files <- grep(".*jpg", all.files, value=T)
+
+for(i in 1:length(my.files)) {
+  image <- magick::image_read(my.files[i])
+  image_cropped <- image_trim(image)
+  image_write(image_cropped, path = my.files[i], format = "jpg")
+}
+
+print(i)
+```
